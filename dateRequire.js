@@ -2,11 +2,10 @@ const os = require('os')
 const greeting = require('./greeting')
 let username = os.userInfo().username;
 module.exports = {
-    write: ()=>{ 
-                console.log(username)
-                console.log(`Дата запроса ${greeting.date}`)
-                console.log(greeting.getMessage(username))
-    }
+    user: username,
+    date:`Дата запроса ${greeting.date}`,
+    hell: greeting.getMessage(username)
+    
 }
     
     //console.log(username)
