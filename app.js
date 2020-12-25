@@ -7,7 +7,8 @@ const port = process.env.port || 3000
 app.set('view engine', 'ejs')
 
 app.get('/', (req, res)=>{
-    console.log(dateRequire.time)
+    dateRequire.write()
+    console.log("-------------------------")
 })
 
 app.listen(port, ()=>{
