@@ -1,4 +1,5 @@
 const express = require('express')
+const fs = require("fs");
 const dateRequire = require('./dateRequire')
 
 const app = express()
@@ -10,29 +11,26 @@ app.get('/', (req, res)=>{
     //res.end("Hello from Express!");
     res.end(dateRequire.user)
     res.end(dateRequire.writeDate)
-    console.log("--------------")
+    console.log("--------------") 
+    fs.truncate("helo.txt",(error)=>{
+        console.log("Ассинхронное удаление")
+    })
 
-    function displaySync(callback){
-        callback();
-    }
-     
-    console.log("Начало работы программы");
-     
-    setTimeout(function(){
-             
-            console.log("timeout 500");
-    }, 500);
-     
-    setTimeout(function(){
-             
-            console.log("timeout 100");
-    }, 100);
-     
-    displaySync(function(){console.log("without timeout")});
-    console.log("Завершение работы программы");
+    fs.readFile("helo.txt", "utf8", (error,data)=>{
+        console.log("Ассинхронное чтение 1")
+        console.log(data)
+    })
 
-        
-
+    fs.appendFile("helo.txt", "HELLO", (error)=>{
+        console.log("Ассинхронная запись")
+    })
+    
+    fs.readFile("helo.txt", "utf8", (error,data)=>{
+        console.log("Ассинхронное чтение2")
+        console.log(data)
+    })
+    
+    console.log("END")
 })
 
 app.listen(port, ()=>{

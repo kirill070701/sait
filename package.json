@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "ejs": "^3.1.5",
+    "events": "^3.2.0",
     "express": "^4.17.1",
     "file-system": "^2.2.2",
     "os": "^0.1.1"
