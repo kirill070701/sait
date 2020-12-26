@@ -13,20 +13,23 @@ app.get('/', (req, res)=>{
     res.end(dateRequire.user + "\n" + dateRequire.date)
     res.end(dateRequire.writeDate)
     console.log("--------------") 
-    let emitter = new Emitter()
-    let evetName = "greet"
+    let ws = fs.createWriteStream("helo.txt")
+    let ls = fs.createWriteStream("say.txt")
+    ws.write("Привет")
+    ws.write("Привет мир")
+    ws.end("Завершение")
 
-    emitter.on(evetName, ()=>{
-        console.log("Hello")
-    })
     
-    emitter.on("greet", (data)=>{
-        console.log('world!!!', data)
+
+    let rs = fs.createReadStream("helo.txt", "utf8")
+    rs.on("data", function(chunk){ 
+        console.log(chunk)
     })
-
-
-    emitter.emit(evetName, "hihihi");
-
+    rs.pipe(ls)
+    let lss = fs.createReadStream("say.txt", "utf8")
+    lss.on("data", function(chunk){ 
+        console.log(chunk)
+    })
     console.log("END")
 })
 
