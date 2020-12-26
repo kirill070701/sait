@@ -1,5 +1,6 @@
 const express = require('express')
 const fs = require("fs");
+const Emitter = require("events")
 const dateRequire = require('./dateRequire')
 
 const app = express()
@@ -9,27 +10,23 @@ app.set('view engine', 'ejs')
 
 app.get('/', (req, res)=>{
     //res.end("Hello from Express!");
-    res.end(dateRequire.user)
+    res.end(dateRequire.user + "\n" + dateRequire.date)
     res.end(dateRequire.writeDate)
     console.log("--------------") 
-    fs.truncate("helo.txt",(error)=>{
-        console.log("Ассинхронное удаление")
-    })
+    let emitter = new Emitter()
+    let evetName = "greet"
 
-    fs.readFile("helo.txt", "utf8", (error,data)=>{
-        console.log("Ассинхронное чтение 1")
-        console.log(data)
-    })
-
-    fs.appendFile("helo.txt", "HELLO", (error)=>{
-        console.log("Ассинхронная запись")
+    emitter.on(evetName, ()=>{
+        console.log("Hello")
     })
     
-    fs.readFile("helo.txt", "utf8", (error,data)=>{
-        console.log("Ассинхронное чтение2")
-        console.log(data)
+    emitter.on("greet", (data)=>{
+        console.log('world!!!', data)
     })
-    
+
+
+    emitter.emit(evetName, "hihihi");
+
     console.log("END")
 })
 
